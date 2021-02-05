@@ -31,26 +31,27 @@ make add-dsock-api
 #make rm-dsock-api
 ```
 
-<!--
+
 #### dsock-worker
 then setup dsock-worker internal service (this is not available from outside the cluster context)
 ```bash
 make add-dsock-worker
 #make rm-dsock-worker
 ```
+<!--
+#### server
+once workers are.....
+```bash
+make add-server
+# make rm-server
+```
+
 
 #### database
 then setup postgres internal service (this is not available from outside the cluster context)
 ```bash
 make add-database
 #make rm-database
-```
-
-#### server
-once database container is healthy, install server charts (also intangible for outside requesters)
-```bash
-make add-server
-# make rm-server
 ```
 
 #### ingress
