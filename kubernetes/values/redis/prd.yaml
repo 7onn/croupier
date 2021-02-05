@@ -1,0 +1,18 @@
+replicaCount: 1
+image:
+  repository: redis
+  tag: alpine # this should be the commit SHA of a wishful release
+  pullPolicy: IfNotPresent
+service:
+  type: ClusterIP
+  port: 6379
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+env:
+  - name: qm 
+    value: tom
