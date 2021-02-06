@@ -9,7 +9,6 @@ make
 ```bash
 make minikube-start
 make minikube-addons-enabled
-make artifacts
 ```
 
 append the following command's output in your `/etc/hosts`
@@ -22,7 +21,7 @@ e.g:
 192.168.64.2 minikube
 ```
 
-once every artifact is successfully built and the minikube is identified as a HOST in your computer, you might follow [this](https://github.com/devbytom/hurb/tree/master/kubernetes) in order to install the application charts
+once every artifact is successfully built and the minikube is identified as a HOST in your computer, you might follow [this](https://github.com/devbytom/croupier/tree/master/kubernetes) in order to install the application charts
 ```bash
 cd ./kubernetes
 ```
