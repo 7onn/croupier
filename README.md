@@ -25,3 +25,9 @@ once every artifact is successfully built and the minikube is identified as a HO
 ```bash
 cd ./kubernetes
 ```
+
+## License
+
+Copyright (C) tom
+
+Distributed under the New BSD License. See COPYING for further details.
