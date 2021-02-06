@@ -15,7 +15,6 @@ local-db:
 	--name db \
 	-e POSTGRES_PASSWORD=dev \
 	-e DATABASE_NAME=dev \
-    -e DATABASE_URI=postgresql://postgres:dev@:5432/dev \
 	devbytom/pg:latest
 
 .PHONY: rm-db
