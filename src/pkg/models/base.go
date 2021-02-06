@@ -29,7 +29,7 @@ func init() {
 	db.Debug().AutoMigrate(&Account{})
 }
 
-//GetDB !
-func GetDB() *gorm.DB {
+//DB !
+func DB() *gorm.DB {
 	return db
 }
