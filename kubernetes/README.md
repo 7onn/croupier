@@ -1,5 +1,5 @@
 # kubernetes
-this directory contains essential schema and values files to run every service expected by [delta challenge](https://github.com/hurbcom/challenge-delta)
+charts, secrets and values repository
 
 
 ## TL;DR;
