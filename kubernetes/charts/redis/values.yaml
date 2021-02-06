@@ -8,11 +8,8 @@ service:
   port: 6379
 resources:
   limits:
-    cpu: 500m
-    memory: 512Mi
+    cpu: 400m
+    memory: 256Mi
   requests:
-    cpu: 500m
-    memory: 512Mi
-env:
-  - name: qm 
-    value: tom
+    cpu: 200m
+    memory: 128Mi

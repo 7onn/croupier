@@ -13,11 +13,11 @@ service:
   port: 80
 resources: 
   limits:
-    cpu: 800m
-    memory: 1Gi
-  requests:
     cpu: 400m
-    memory: 512Mi
+    memory: 256Mi
+  requests:
+    cpu: 200m
+    memory: 128Mi
 env:
   PORT: 80
   DSOCK_REDIS_HOST: redisprd.prd:6379

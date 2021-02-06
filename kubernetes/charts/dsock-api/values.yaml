@@ -2,14 +2,14 @@ replicaCount: 1
 image:
   repository: devbytom/dsock-api
   tag: latest
-  pullPolicy: IfNotPresent # in order to run it locally, we must avoid the attempt of connecting to any image registry
+  pullPolicy: IfNotPresent
 service:
   type: ClusterIP
   port: 80
 resources: 
   limits:
     cpu: 400m
-    memory: 512Mi
+    memory: 256Mi
   requests:
     cpu: 200m
-    memory: 256Mi
+    memory: 128Mi

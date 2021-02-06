@@ -9,10 +9,10 @@ service:
 resources: 
   limits:
     cpu: 400m
-    memory: 512Mi
+    memory: 128Mi
   requests:
-    cpu: 200m
-    memory: 256Mi
+    cpu: 100m
+    memory: 32Mi
 ingress:
   enabled: true
   annotations: {}

@@ -1,6 +1,6 @@
 replicaCount: 1
 image:
-  repository: docker.io/devbytom/dsock-api
+  repository: docker.io/devbytom/dsock-worker
   tag: latest # this should be the commit SHA of a wishful release
   pullPolicy: IfNotPresent
 autoscaling:
@@ -13,13 +13,13 @@ service:
   port: 80
 resources: 
   limits:
-    cpu: 800m
-    memory: 1Gi
-  requests:
     cpu: 400m
-    memory: 512Mi
+    memory: 256Mi
+  requests:
+    cpu: 200m
+    memory: 128Mi
 env:
   PORT: 80
-  DSOCK_REDIS_HOST: redisprd.prd:6379
+  DSOCK_REDIS_HOST: redis-prd.prd:6379
   DSOCK_LOG_REQUESTS: "true"
   DSOCK_DEBUG: "true"
