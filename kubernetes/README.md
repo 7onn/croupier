@@ -1,20 +1,32 @@
 # kubernetes
 this directory contains essential schema and values files to run every service expected by [delta challenge](https://github.com/hurbcom/challenge-delta)
 
+
+## TL;DR;
+```bash
+make
+make add-production
+```
 #### namespace
 first we need somewhere to install our charts in minikube 
 ```bash
-make
 make add-namespace
 #make rm-namespace
 #"sudo rm -rf /" equivalent commented above
 ```
-
+<!--
 #### metrics-server
 ```bash
-make
 make add-metrics-server
 #make rm-metrics-server
+```
+-->
+
+#### database
+then setup postgres internal service (this is not available from outside the cluster context)
+```bash
+make add-database
+#make rm-database
 ```
 
 #### redis
@@ -38,26 +50,10 @@ then setup dsock-worker internal service (this is not available from outside the
 make add-dsock-worker
 #make rm-dsock-worker
 ```
-<!--
+
 #### server
 once workers are.....
 ```bash
 make add-server
 # make rm-server
 ```
-
-
-#### database
-then setup postgres internal service (this is not available from outside the cluster context)
-```bash
-make add-database
-#make rm-database
-```
-
-#### ingress
-now the nginx service to handle and forward requests to server
-```bash
-make add-ingress
-#make rm-ingress
-```
--->
