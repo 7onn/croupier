@@ -1,0 +1,5 @@
+apiVersion: v2
+appVersion: "1.0"
+description: a golang server deployment
+name: server
+version: 0.1.0

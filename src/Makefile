@@ -3,18 +3,13 @@ default: help
 help:
 	@echo 
 	@echo "available commands"
-	@echo "  - dev"
-	@echo "  - push-latest"
-	@echo "  - clean"
+	@echo "  - dev #live reload"
+	@echo "  - build #outputs the application binary"
+	@echo "  - docker-build"
+	@echo "  - docker-run"
+	@echo "  - docker-push"
+	@echo "  - clean #deletes the application binary"
 	@echo
-	
-GOLANG_DOCKER_IMAGE := golang:1.15.6
-GO_BUILD_CONTAINER=docker run -i --rm \
-	-v "$$(pwd):/ops" \
-	-w /ops --user="$$(id -u):$$(id -g)" \
-	-e GOPATH=/ops/build-go-path \
-	-e GOCACHE=/ops/build-cache \
-	$(GOLANG_DOCKER_IMAGE)
 
 BIN=server
 GO=CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go
@@ -35,19 +30,22 @@ build:
 
 .PHONY: docker-build
 docker-build:
-	$(GO_BUILD_CONTAINER) \
-	sh -c "$(GO_BUILD_COMMAND)"
+	docker build \
+	-t $(IMAGE):$(TAG) \
+	--build-arg TAG=$(TAG) \
+	.
 
-.PHONY: image
-image: docker-build
-	docker build -t $(IMAGE):$(TAG) .
+.PHONY: docker-run
+docker-run: docker-build
+	docker run -i \
+	-e PORT=3000 \
+	-e JWT_TOKEN=dev \
+	-e DB_URI="postgresql://postgres:dev@localhost:5432/dev" \
+	devbytom/pk-$(BIN):$(TAG)
 
-.PHONY: push
-push: image
+.PHONY: docker-push
+docker-push: docker-build
 	docker push $(IMAGE):$(TAG)
-
-.PHONY: push-latest
-push-latest: image
 	docker tag $(IMAGE):$(TAG) $(IMAGE):latest
 	docker push $(IMAGE):latest
 

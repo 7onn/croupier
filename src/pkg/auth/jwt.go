@@ -2,7 +2,6 @@ package auth
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"os"
 	"strings"
@@ -73,7 +72,6 @@ var JwtHandler = func(next http.Handler) http.Handler {
 			return
 		}
 
-		fmt.Sprintf("User %", tk.Username)
 		ctx := context.WithValue(r.Context(), "user", tk.UserID)
 		r = r.WithContext(ctx)
 		next.ServeHTTP(w, r)

@@ -1,0 +1,21 @@
+replicaCount: 1
+image:
+  repository: devbytom/pk-server
+  tag: latest
+  pullPolicy: IfNotPresent
+service:
+  type: ClusterIP
+  port: 3000
+resources: 
+  limits:
+    cpu: 400m
+    memory: 512Mi
+  requests:
+    cpu: 200m
+    memory: 256Mi
+ingress:
+  enabled: true
+  annotations: {}
+  path: /
+  hosts:
+    - minikube
