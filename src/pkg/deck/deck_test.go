@@ -35,5 +35,13 @@ func TestAddCard(t *testing.T) {
 			t.Errorf("want 2 Of Spades, got %v", card)
 		}
 	})
+}
 
+func TestCardToString(t *testing.T) {
+	t.Run("must return ♠2", func(t *testing.T) {
+		card := Card{Value: 2, Suit: "Spades"}.ToString()
+		if card != "♠2" {
+			t.Errorf("want ♠2 got %v", card)
+		}
+	})
 }

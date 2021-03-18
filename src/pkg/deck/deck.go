@@ -10,6 +10,34 @@ type Card struct {
 	Value int
 }
 
+func (c Card) ToString() string {
+	valuesMapping := map[int]string{
+		2:  "2",
+		3:  "3",
+		4:  "4",
+		5:  "5",
+		6:  "6",
+		7:  "7",
+		8:  "8",
+		9:  "9",
+		10: "10",
+		11: "J",
+		12: "Q",
+		13: "K",
+		14: "A",
+	}
+
+	suitMapping := map[string]string{
+		"Spades":   "♠",
+		"Hearts":   "♥",
+		"Diamonds": "♦",
+		"Clubs":    "♣",
+	}
+	return suitMapping[c.Suit] + valuesMapping[c.Value]
+	// return "\t" + suitMapping[c.Suit] + valuesMapping[c.Value]
+
+}
+
 type Deck []Card
 
 func AddCard(value int, suit string) Card {
