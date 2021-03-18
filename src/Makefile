@@ -24,6 +24,20 @@ dev:
 	go mod vendor
 	air .
 
+.PHONY: test
+test:
+	go test \
+		-coverprofile=deckcov.out \
+		-cover ./pkg/deck/*.go
+	go test \
+		-coverprofile=gamecov.out \
+		-cover ./pkg/game/*.go
+
+.PHONY: show-coverage
+show-coverage: test
+	go tool cover -html deckcov.out && \
+		go tool cover -html gamecov.out
+
 .PHONY: build
 build:
 	$(GO_BUILD_COMMAND)
