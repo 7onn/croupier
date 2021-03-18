@@ -34,11 +34,7 @@ func (c Card) ToString() string {
 		"Clubs":    "♣",
 	}
 	return suitMapping[c.Suit] + valuesMapping[c.Value]
-	// return "\t" + suitMapping[c.Suit] + valuesMapping[c.Value]
-
 }
-
-type Deck []Card
 
 func AddCard(value int, suit string) Card {
 	return Card{
@@ -47,22 +43,22 @@ func AddCard(value int, suit string) Card {
 	}
 }
 
-func Shuffle(deck Deck) Deck {
-	source := rand.NewSource(time.Now().UnixNano())
-	r := rand.New(source)
-	r.Shuffle(len(deck), func(i, j int) {
-		deck[i], deck[j] = deck[j], deck[i]
-	})
-	return deck
-}
-
-func NewDeck() Deck {
+func NewDeck() []Card {
 	suits := []string{"Spades", "Clubs", "Hearts", "Diamonds"}
-	var deck Deck
+	var deck []Card
 	for _, suit := range suits {
 		for i := 2; i <= 14; i++ {
 			deck = append(deck, AddCard(i, suit))
 		}
 	}
+	return deck
+}
+
+func Shuffle(deck []Card) []Card {
+	source := rand.NewSource(time.Now().UnixNano())
+	r := rand.New(source)
+	r.Shuffle(len(deck), func(i, j int) {
+		deck[i], deck[j] = deck[j], deck[i]
+	})
 	return deck
 }
