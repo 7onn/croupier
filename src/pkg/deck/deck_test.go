@@ -9,8 +9,8 @@ import (
 func TestDeck(t *testing.T) {
 	t.Run("must return 52 cards", func(t *testing.T) {
 		deck := NewDeck()
-		if len(deck.Cards) < 52 {
-			t.Errorf("want %d got %d cards", 52, len(deck.Cards))
+		if len(deck) < 52 {
+			t.Errorf("want %d got %d cards", 52, len(deck))
 		}
 	})
 }
@@ -19,8 +19,8 @@ func TestShuffle(t *testing.T) {
 	t.Run("must return shuffled deck", func(t *testing.T) {
 		deck := NewDeck()
 		deck2 := NewDeck()
-		first := Shuffle(&deck)
-		second := Shuffle(&deck2)
+		first := Shuffle(deck)
+		second := Shuffle(deck2)
 		if reflect.DeepEqual(first, second) {
 			t.Errorf("the first card still on first position")
 		}

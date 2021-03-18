@@ -10,9 +10,7 @@ type Card struct {
 	Value int
 }
 
-type Deck struct {
-	Cards []Card
-}
+type Deck []Card
 
 func AddCard(value int, suit string) Card {
 	return Card{
@@ -21,11 +19,11 @@ func AddCard(value int, suit string) Card {
 	}
 }
 
-func Shuffle(deck *Deck) *Deck {
+func Shuffle(deck Deck) Deck {
 	source := rand.NewSource(time.Now().UnixNano())
 	r := rand.New(source)
-	r.Shuffle(len(deck.Cards), func(i, j int) {
-		deck.Cards[i], deck.Cards[j] = deck.Cards[j], deck.Cards[i]
+	r.Shuffle(len(deck), func(i, j int) {
+		deck[i], deck[j] = deck[j], deck[i]
 	})
 	return deck
 }
@@ -35,7 +33,7 @@ func NewDeck() Deck {
 	var deck Deck
 	for _, suit := range suits {
 		for i := 2; i <= 14; i++ {
-			deck.Cards = append(deck.Cards, AddCard(i, suit))
+			deck = append(deck, AddCard(i, suit))
 		}
 	}
 	return deck
