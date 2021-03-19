@@ -1,50 +1,29 @@
 package main
 
 import (
-	"fmt"
+	"croupier/pkg/auth"
+	"croupier/pkg/controllers"
 	"html/template"
 	"log"
 	"net/http"
 	"os"
 
-	"croupier/pkg/auth"
-
-	"croupier/pkg/controllers"
-
-	cards "croupier/pkg/cards"
-
 	"github.com/gorilla/mux"
 )
 
 func home(w http.ResponseWriter, r *http.Request) {
-	homeTemplate.Execute(w, "ws://"+r.Host+"/play?room=1&jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRldmJ5dG9tQGdtYWlsLmNvbSIsImlhdCI6MTUxNjIzOTAyMn0.L3pBFKCdzXuV8AdzYFH73SVTZW3ZUx3KCV0N-chheYg")
+	homeTemplate.Execute(w, "ws://"+r.Host+"/play?room=1&jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxfQ.33jUtng2NN6UqYSch4z0UnkkWSyOziIiKaOWZND9AZ0")
 }
 
 func main() {
-
-	haa := cards.NewDeck()
-	shuffled := cards.Shuffle(haa)
-	// for _, c := range shuffled {
-	deal := shuffled[0 : len(shuffled)-50]
-	fmt.Println(deal)
-
-	fivefinalcards := deal
-
-	fivefinalcards = append(fivefinalcards, shuffled[7])
-	fivefinalcards = append(fivefinalcards, shuffled[14])
-	fivefinalcards = append(fivefinalcards, shuffled[21])
-	fmt.Println(fivefinalcards)
-	a := cards.CalculateFiveBestCards(fivefinalcards)
-	fmt.Printf("%+v \n %+v \n", a, a.ToString())
-
 	router := mux.NewRouter()
 	router.Use(auth.JwtHandler)
 
 	router.HandleFunc("/", home).Methods("GET")
 	router.HandleFunc("/play", controllers.Play).Methods("GET")
 
-	router.HandleFunc("/api/users/new", controllers.CreateAccount).Methods("POST")
-	router.HandleFunc("/api/users/login", controllers.Authenticate).Methods("POST")
+	router.HandleFunc("/api/user/new", controllers.CreateAccount).Methods("POST")
+	router.HandleFunc("/api/user/login", controllers.Authenticate).Methods("POST")
 
 	port := os.Getenv("PORT")
 	log.Fatal(http.ListenAndServe(":"+port, router))
