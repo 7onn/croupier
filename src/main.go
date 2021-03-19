@@ -1,14 +1,18 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 	"os"
 
 	"croupier/pkg/auth"
+	"croupier/pkg/game"
 
 	"croupier/pkg/controllers"
+
+	cards "croupier/pkg/cards"
 
 	"github.com/gorilla/mux"
 )
@@ -18,6 +22,22 @@ func home(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+
+	haa := cards.NewDeck()
+	shuffled := cards.Shuffle(haa)
+	// for _, c := range shuffled {
+	deal := shuffled[0 : len(shuffled)-50]
+	fmt.Println(deal)
+
+	fivefinalcards := deal
+
+	fivefinalcards = append(fivefinalcards, shuffled[14])
+	fivefinalcards = append(fivefinalcards, shuffled[21])
+	fivefinalcards = append(fivefinalcards, shuffled[28])
+	fmt.Println(fivefinalcards)
+	a := game.CalculateFiveBestCards(fivefinalcards)
+	fmt.Printf("%+v \n %+v \n", a, a.ToString())
+
 	router := mux.NewRouter()
 	router.Use(auth.JwtHandler)
 

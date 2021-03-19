@@ -4,6 +4,8 @@ help:
 	@echo 
 	@echo "available commands"
 	@echo "  - dev #live reload"
+	@echo "  - test"
+	@echo "  - show-coverage"
 	@echo "  - build #outputs the application binary"
 	@echo "  - docker-build"
 	@echo "  - docker-run"
@@ -27,16 +29,16 @@ dev:
 .PHONY: test
 test:
 	go test \
-		-coverprofile=deckcov.out \
-		-cover ./pkg/deck/*.go
+		-coverprofile=cardscov.out \
+		-cover ./pkg/cards/*.go
 	go test \
 		-coverprofile=gamecov.out \
 		-cover ./pkg/game/*.go
 
 .PHONY: show-coverage
 show-coverage: test
-	go tool cover -html deckcov.out && \
-		go tool cover -html gamecov.out
+	go tool cover -html cardscov.out
+	go tool cover -html gamecov.out
 
 .PHONY: build
 build:
