@@ -8,7 +8,6 @@ import (
 	"os"
 
 	"croupier/pkg/auth"
-	"croupier/pkg/game"
 
 	"croupier/pkg/controllers"
 
@@ -31,11 +30,11 @@ func main() {
 
 	fivefinalcards := deal
 
+	fivefinalcards = append(fivefinalcards, shuffled[7])
 	fivefinalcards = append(fivefinalcards, shuffled[14])
 	fivefinalcards = append(fivefinalcards, shuffled[21])
-	fivefinalcards = append(fivefinalcards, shuffled[28])
 	fmt.Println(fivefinalcards)
-	a := game.CalculateFiveBestCards(fivefinalcards)
+	a := cards.CalculateFiveBestCards(fivefinalcards)
 	fmt.Printf("%+v \n %+v \n", a, a.ToString())
 
 	router := mux.NewRouter()
