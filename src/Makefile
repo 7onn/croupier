@@ -28,21 +28,22 @@ dev:
 
 .PHONY: test
 test:
-	go test \
-		-coverprofile=cardscov.out \
-		-cover ./pkg/cards/*.go
-	go test \
-		-coverprofile=gamecov.out \
-		-cover ./pkg/game/*.go
-	go test \
-		-coverprofile=usercov.out \
-		-cover ./pkg/user/*.go
+	go test -coverprofile=auth.out -cover ./pkg/auth/*.go
+	go test -coverprofile=cards.out -cover ./pkg/cards/*.go
+	go test -coverprofile=controllers.out -cover ./pkg/controllers/*.go
+	go test -coverprofile=game.out -cover ./pkg/game/*.go
+	go test -coverprofile=user.out -cover ./pkg/user/*.go
+	go test -coverprofile=utils.out -cover ./pkg/utils/*.go
 
 .PHONY: show-coverage
 show-coverage: test
-	go tool cover -html cardscov.out
-	go tool cover -html gamecov.out
-	go tool cover -html usercov.out
+	echo "uncomment to enable coverage report (this will annoyingly open tabs on your browser)"
+	# go tool cover -html authcov.out
+	# go tool cover -html cards.out
+	# go tool cover -html controllers.out
+	# go tool cover -html game.out
+	# go tool cover -html user.out
+	# go tool cover -html utils.out
 
 .PHONY: build
 build:
