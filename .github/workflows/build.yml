@@ -17,11 +17,11 @@ jobs:
       - name: Docker Build & Push to Docker Hub
         uses: opspresso/action-docker@master
         with:
-          args: --docker
+          args: --docker --TAG=${{ github.sha }}
         env:
           USERNAME: ${{ secrets.DOCKER_USERNAME }}
           PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          DOCKERFILE: "src/Dockerfile"
+          DOCKERFILE: "Dockerfile"
           IMAGE_NAME: "devbytom/croupier"
           TAG_NAME: ${{ github.sha }}
           LATEST: "true"
