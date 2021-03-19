@@ -18,7 +18,7 @@ var JwtHandler = func(next http.Handler) http.Handler {
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
-		notAuth := []string{"/", "/play", "/api/users/new", "/api/users/login"}
+		notAuth := []string{"/", "/play", "/api/user/new", "/api/user/login"}
 		requestPath := r.URL.Path
 
 		for _, value := range notAuth {
