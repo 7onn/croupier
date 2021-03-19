@@ -5,13 +5,13 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"croupier/pkg/models"
+	"croupier/pkg/user"
 )
 
 //CreateAccount !
 var CreateAccount = func(w http.ResponseWriter, r *http.Request) {
 
-	account := &models.Account{}
+	account := &user.Account{}
 	err := json.NewDecoder(r.Body).Decode(account)
 	if err != nil {
 		u.Respond(w, u.Message(false, "Invalid request"))
@@ -25,13 +25,13 @@ var CreateAccount = func(w http.ResponseWriter, r *http.Request) {
 //Authenticate !
 var Authenticate = func(w http.ResponseWriter, r *http.Request) {
 
-	account := &models.Account{}
+	account := &user.Account{}
 	err := json.NewDecoder(r.Body).Decode(account)
 	if err != nil {
 		u.Respond(w, u.Message(false, "Invalid request"))
 		return
 	}
 
-	resp := models.Login(account.Email, account.Login, account.Password)
+	resp := user.Login(account.Email, account.Login, account.Password)
 	u.Respond(w, resp)
 }

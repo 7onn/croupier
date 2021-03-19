@@ -34,11 +34,15 @@ test:
 	go test \
 		-coverprofile=gamecov.out \
 		-cover ./pkg/game/*.go
+	go test \
+		-coverprofile=usercov.out \
+		-cover ./pkg/user/*.go
 
 .PHONY: show-coverage
 show-coverage: test
 	go tool cover -html cardscov.out
 	go tool cover -html gamecov.out
+	go tool cover -html usercov.out
 
 .PHONY: build
 build:

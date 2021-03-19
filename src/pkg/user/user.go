@@ -1,4 +1,4 @@
-package models
+package user
 
 import (
 	u "croupier/pkg/utils"

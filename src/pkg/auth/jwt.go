@@ -8,7 +8,7 @@ import (
 
 	u "croupier/pkg/utils"
 
-	"croupier/pkg/models"
+	"croupier/pkg/user"
 
 	jwt "github.com/dgrijalva/jwt-go"
 )
@@ -50,7 +50,7 @@ var JwtHandler = func(next http.Handler) http.Handler {
 		}
 
 		tokenPart := splitted[1]
-		tk := &models.Token{}
+		tk := &user.Token{}
 
 		token, err := jwt.ParseWithClaims(tokenPart, tk, func(token *jwt.Token) (interface{}, error) {
 			return []byte(os.Getenv("JWT_TOKEN")), nil
