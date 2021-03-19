@@ -120,3 +120,13 @@ func TestOrderSliceDescOfInt(t *testing.T) {
 		}
 	})
 }
+
+func TestDeal(t *testing.T) {
+	t.Run("must deal 2 cards", func(t *testing.T) {
+		cards := NewDeck()
+		hand := Deal(&cards, 2)
+		if len(hand) != 2 {
+			t.Errorf("want 2 cards got %v", len(hand))
+		}
+	})
+}

@@ -175,3 +175,9 @@ func OrderSliceOfIntDesc(s []int) []int {
 	}
 	return s
 }
+
+func Deal(d *[]Card, handSize int) []Card {
+	hand := (*d)[:handSize]
+	(*d) = (*d)[handSize:]
+	return hand
+}
