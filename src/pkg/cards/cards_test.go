@@ -182,13 +182,13 @@ func TestBetterThan(t *testing.T) {
 		hs1 := CalculateFiveBestCards(rf)
 		hs2 := CalculateFiveBestCards(sf)
 
-		if !BetterThan(hs1, hs2) {
+		if BetterThan(hs1, hs2) != -1 {
 			t.Errorf("royal flush is better than straight flush")
 		}
 
 	})
 
-	t.Run("straight flush < four of a kind", func(t *testing.T) {
+	t.Run("straight flush > four of a kind", func(t *testing.T) {
 		sf := []Card{
 			{
 				Suit: "Spades",
@@ -238,7 +238,7 @@ func TestBetterThan(t *testing.T) {
 		hs1 := CalculateFiveBestCards(sf)
 		hs2 := CalculateFiveBestCards(fok)
 
-		if !BetterThan(hs1, hs2) {
+		if BetterThan(hs1, hs2) != -1 {
 			t.Errorf("straight flush should beat four of a kind")
 		}
 

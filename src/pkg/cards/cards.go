@@ -1,6 +1,7 @@
 package cards
 
 import (
+	"fmt"
 	"math/rand"
 	"time"
 )
@@ -182,35 +183,35 @@ func Deal(d *[]Card, handSize int) []Card {
 	return hand
 }
 
-func BetterThan(h1 HandScore, h2 HandScore) bool {
+func BetterThan(h1 HandScore, h2 HandScore) int {
 	if h1.Score > h2.Score {
-		return true
+		return -1
 	}
 	if h1.Score < h2.Score {
-		return false
+		return 1
 	}
 	if h1.Card1 > h2.Card1 {
-		return true
+		return -1
 	}
 	if h1.Card1 < h2.Card1 {
-		return false
+		return 1
 	}
 	if h1.Card2 > h2.Card2 {
-		return true
+		return -1
 	}
 	if h1.Card2 < h2.Card2 {
-		return false
+		return 1
 	}
 	for i := len(h1.RemainingCards) - 1; i >= 0; i-- {
 		if h1.RemainingCards[i] > h2.RemainingCards[i] {
-			return true
+			return -1
 		}
 		if h1.RemainingCards[i] < h2.RemainingCards[i] {
-			return false
+			return 1
 		}
 	}
 
-	return false
+	return 0
 }
 
 func CalculateFiveBestCards(cardsInput []Card) HandScore {
@@ -366,4 +367,55 @@ func CalculateFiveBestCards(cardsInput []Card) HandScore {
 	}
 
 	return hS
+}
+
+func MaxInt(a int, b int) int {
+	if a < b {
+		return b
+	}
+
+	return a
+}
+
+func MinInt(a int, b int) int {
+	if a < b {
+		return a
+	}
+
+	return b
+}
+
+func Contains(s []int, e int) bool {
+	for _, a := range s {
+		if a == e {
+			return true
+		}
+	}
+	return false
+}
+
+func DeckContains(deck []Card, c Card) bool {
+	for _, a := range deck {
+		if a.Rank == c.Rank && c.Suit == a.Suit {
+			return true
+		}
+	}
+	return false
+}
+
+func IndexOf(s []int, e int) int {
+	for i, a := range s {
+		if a == e {
+			return i
+		}
+	}
+	return -1
+}
+
+func PrintDeck(d []Card) {
+	s := ""
+	for _, card := range d {
+		s += card.ToString() + " "
+	}
+	fmt.Printf(s + "\n")
 }
