@@ -34,7 +34,6 @@ type Account struct {
 
 //Validate !
 func (account *Account) Validate() (map[string]interface{}, bool) {
-
 	if !strings.Contains(account.Email, "@") {
 		return u.Message(false, "Email address is required"), false
 	}
@@ -74,7 +73,6 @@ func (account *Account) Validate() (map[string]interface{}, bool) {
 
 //Create !
 func (account *Account) Create() map[string]interface{} {
-
 	if resp, ok := account.Validate(); !ok {
 		return resp
 	}
@@ -102,9 +100,14 @@ func (account *Account) Create() map[string]interface{} {
 
 //Login !
 func Login(email, login, password string) map[string]interface{} {
-
 	account := &Account{}
-	err := DB().Table("accounts").Where("email = ? OR login = ?", email, login).First(account).Error
+	var err error
+	if email != "" {
+		err = DB().Table("accounts").Where("email = ?", email).First(account).Error
+	} else if login != "" {
+		err = DB().Table("accounts").Where("login = ?", login).First(account).Error
+	}
+
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return u.Message(false, "Neither login nor email address were found")
@@ -131,7 +134,6 @@ func Login(email, login, password string) map[string]interface{} {
 
 //GetUser !
 func GetUser(u uint) *Account {
-
 	acc := &Account{}
 	DB().Table("accounts").Where("id = ?", u).First(acc)
 	if acc.Email == "" {
