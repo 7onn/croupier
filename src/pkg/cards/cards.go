@@ -1,7 +1,6 @@
 package cards
 
 import (
-	"fmt"
 	"math/rand"
 	"time"
 )
@@ -410,12 +409,4 @@ func IndexOf(s []int, e int) int {
 		}
 	}
 	return -1
-}
-
-func PrintDeck(d []Card) {
-	s := ""
-	for _, card := range d {
-		s += card.ToString() + " "
-	}
-	fmt.Printf(s + "\n")
 }
