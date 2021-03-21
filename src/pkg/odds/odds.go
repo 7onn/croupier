@@ -15,7 +15,7 @@ func CalculateOdds(hand []cards.Card, sharedCardsInput []cards.Card) float64 {
 	sharedCards := cards.CopyDeck(sharedCardsInput)
 	switch len(sharedCards) {
 	case 0:
-		bytes, err := ioutil.ReadFile("initialOdds2Players.csv")
+		bytes, err := ioutil.ReadFile("~/initialOdds2Players.csv")
 		if err != nil {
 			fmt.Println("Error while reading initialOdds2Players.csv:", err)
 			os.Exit(1)
