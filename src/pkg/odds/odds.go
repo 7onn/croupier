@@ -2,9 +2,6 @@ package odds
 
 import (
 	"croupier/pkg/cards"
-	"fmt"
-	"io/ioutil"
-	"os"
 	"strconv"
 	"strings"
 )
@@ -15,12 +12,12 @@ func CalculateOdds(hand []cards.Card, sharedCardsInput []cards.Card) float64 {
 	sharedCards := cards.CopyDeck(sharedCardsInput)
 	switch len(sharedCards) {
 	case 0:
-		bytes, err := ioutil.ReadFile("~/initialOdds2Players.csv")
-		if err != nil {
-			fmt.Println("Error while reading initialOdds2Players.csv:", err)
-			os.Exit(1)
-		}
-
+		// bytes, err := ioutil.ReadFile("~/initialOdds2Players.csv")
+		// if err != nil {
+		// 	fmt.Println("Error while reading initialOdds2Players.csv:", err)
+		// 	os.Exit(1)
+		// }
+		bytes := []byte("")
 		lines := strings.Split(string(bytes), "\r\n")
 		for _, line := range lines[1:] {
 			data := strings.Split(line, ",")
