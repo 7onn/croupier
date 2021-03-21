@@ -80,6 +80,9 @@ window.onload = function () {
                 var item = document.createElement("div");
                 item.innerText = messages[i];
                 appendLog(item);
+
+                var log = document.getElementById("log");
+                log.scrollTop = log.scrollHeight;
             }
         };
     } else {
