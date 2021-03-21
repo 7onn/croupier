@@ -31,9 +31,12 @@ test:
 	go test -coverprofile=auth.out -cover ./pkg/auth/*.go
 	go test -coverprofile=cards.out -cover ./pkg/cards/*.go
 	go test -coverprofile=controllers.out -cover ./pkg/controllers/*.go
-	go test -coverprofile=game.out -cover ./pkg/game/*.go
+	# go test -coverprofile=game.out -cover ./pkg/game/*.go
+	go test -coverprofile=odds.out -cover ./pkg/odds/*.go
+	go test -coverprofile=poker.out -cover ./pkg/poker/*.go
 	go test -coverprofile=user.out -cover ./pkg/user/*.go
 	go test -coverprofile=utils.out -cover ./pkg/utils/*.go
+	
 
 .PHONY: show-coverage
 show-coverage: test

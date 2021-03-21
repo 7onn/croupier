@@ -4,15 +4,21 @@ import (
 	"croupier/pkg/auth"
 	"croupier/pkg/controllers"
 	"html/template"
-	"log"
 	"net/http"
 	"os"
 
 	"github.com/gorilla/mux"
+	log "github.com/sirupsen/logrus"
 )
 
 func home(w http.ResponseWriter, r *http.Request) {
-	homeTemplate.Execute(w, "ws://"+r.Host+"/play?room=1&jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxfQ.33jUtng2NN6UqYSch4z0UnkkWSyOziIiKaOWZND9AZ0")
+	homeTemplate.Execute(w, "ws://"+r.Host+"/play?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxfQ.33jUtng2NN6UqYSch4z0UnkkWSyOziIiKaOWZND9AZ0")
+}
+
+func init() {
+	log.SetFormatter(&log.JSONFormatter{})
+	log.SetOutput(os.Stdout)
+	log.SetLevel(log.InfoLevel)
 }
 
 func main() {
@@ -23,8 +29,6 @@ func main() {
 	router.HandleFunc("/", home).Methods("GET")
 	router.HandleFunc("/api/user/new", controllers.CreateAccount).Methods("POST")
 	router.HandleFunc("/api/user/login", controllers.Authenticate).Methods("POST")
-
-	// router.HandleFunc("/play", controllers.Play).Methods("GET")
 
 	router.HandleFunc("/play", func(rw http.ResponseWriter, r *http.Request) {
 		hub := controllers.NewHub()
