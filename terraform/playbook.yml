@@ -1,0 +1,143 @@
+---
+- become: yes
+  hosts: all
+  name: Setup Backend
+  tasks:
+    - name: include vars
+      include_vars: playbook.vars.yml
+
+    - name: Add the user 'devbytom' and add it to 'sudo'
+      user:
+        name: devbytom
+        group: sudo
+
+    - name: Update all packages
+      apt:
+        upgrade: dist
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Ensure bash, git, OpenSSl, and libssl are the latest versions
+      apt: 
+        name: ['bash', 'git', 'openssl', 'libssl-dev', 'libssl-doc', 'libseccomp2']
+        update_cache: yes 
+        state: latest
+
+    - name: Install Docker required system packages
+      apt: 
+        name: ['apt-transport-https', 'ca-certificates', 'curl', 'gnupg2', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools']
+        state: latest 
+        update_cache: yes
+
+    - name: Download Containerd
+      get_url: 
+        url: https://download.docker.com/linux/debian/dists/buster/pool/stable/amd64/containerd.io_1.4.3-1_amd64.deb
+        dest: "{{ home }}/containerd.io_1.4.3-1_amd64.deb" 
+
+    - name: Install Containerd
+      apt:
+        deb: "{{ home }}/containerd.io_1.4.3-1_amd64.deb" 
+
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/debian/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/debian stretch stable
+        state: present
+
+    - name: Index new repo into the cache
+      become: yes
+      apt:
+        update_cache: yes
+        name: "*"
+        state: latest
+        force_apt_get: yes
+
+    - name: Update apt and install docker-ce
+      apt:
+        name: docker-ce 
+        state: latest
+
+    - name: Add the user 'devbytom' and add it to 'docker'
+      user:
+        name: devbytom
+        group: docker
+
+    - name: Install Docker Module for Python
+      pip:
+        name: docker
+
+    - name: Database container
+      docker_container:
+        name: pg
+        image: devbytom/pg:latest
+        state: started
+        recreate: yes
+        restart: yes
+        network_mode: "host"
+        exposed_ports:
+          - "5432"
+        volumes:
+          - /data
+        env:
+          POSTGRES_PASSWORD: dev
+          DATABASE_NAME: dev
+
+    - name: Creating Odds file
+      file:
+        path: "/home/{{ ansible_ssh_user }}/initialOdds2Players.csv"
+        state: touch
+
+    - name: Server container
+      docker_container:
+        name: server
+        image: devbytom/croupier:latest
+        state: started
+        recreate: yes
+        restart: yes
+        pull: yes
+        network_mode: "host"
+        exposed_ports:
+          - "5000"
+        env:
+          PORT: "5000"
+          JWT_TOKEN: "dev"
+          DB_URI: "postgresql://postgres:dev@localhost:5432/dev?sslmode=disable"
+
+    # - name: Download Go
+    #   get_url: 
+    #     url: "https://storage.googleapis.com/golang/go{{ golang_version }}.{{ golang_os }}-{{ golang_arch }}.tar.gz"
+    #     dest: "/usr/local/src/go{{ golang_version }}.{{ golang_os }}-{{ golang_arch }}.tar.gz"
+
+    # - name: Extract and install Go
+    #   unarchive: 
+    #     src: "/usr/local/src/go{{ golang_version }}.{{ golang_os }}-{{ golang_arch }}.tar.gz"
+    #     dest: /usr/local/
+    #     copy: no
+
+    # - name: Symlink Go into /usr/local/bin
+    #   with_items:
+    #     - go
+    #     - godoc
+    #     - gofmt
+    #   file: 
+    #     src: "/usr/local/go/bin/{{ item }}"
+    #     dest: "/usr/local/bin/{{ item }}"
+    #     state: link
+    #     force: yes
+
+    # - name: Install Air
+    #   command: go get github.com/cosmtrek/air
+    #            creates="{{ golang_path }}/bin/air"
+    #   environment:
+    #     GOPATH: "{{ golang_path }}"
+
+    # - name: Install Croupier
+    #   become_user: devbytom
+    #   git:
+    #     repo: https://github.com/tompsh/croupier.git
+    #     dest: "{{ golang_path }}/src/github.com/tompsh/croupier"
+    #     version: main
