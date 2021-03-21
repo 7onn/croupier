@@ -9,7 +9,7 @@ import (
 )
 
 //CreateAccount !
-var CreateAccount = func(w http.ResponseWriter, r *http.Request) {
+func CreateAccount(w http.ResponseWriter, r *http.Request) {
 
 	account := &user.Account{}
 	err := json.NewDecoder(r.Body).Decode(account)
@@ -23,7 +23,7 @@ var CreateAccount = func(w http.ResponseWriter, r *http.Request) {
 }
 
 //Authenticate !
-var Authenticate = func(w http.ResponseWriter, r *http.Request) {
+func Authenticate(w http.ResponseWriter, r *http.Request) {
 
 	account := &user.Account{}
 	err := json.NewDecoder(r.Body).Decode(account)

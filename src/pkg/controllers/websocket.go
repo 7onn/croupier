@@ -3,10 +3,11 @@ package controllers
 import (
 	"croupier/pkg/user"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/websocket"
@@ -158,12 +159,10 @@ var upgrader = websocket.Upgrader{
 	WriteBufferSize: 1024,
 }
 
-// serveWs handles websocket requests from the peer.
 func ServeWs(hub *Hub, w http.ResponseWriter, r *http.Request) {
 	q := r.URL.Query()
 	j := q.Get("jwt")
-	room := q.Get("room")
-	fmt.Printf("\n jwt %+v \n room: %+v \n", j, room)
+	log.Info("ServeWs hit; jwt: ", j)
 
 	tk := &user.Token{}
 	jwt.ParseWithClaims(j, tk, func(token *jwt.Token) (interface{}, error) {
@@ -183,5 +182,4 @@ func ServeWs(hub *Hub, w http.ResponseWriter, r *http.Request) {
 	go client.writePump()
 	go PlayPoker(client)
 	// go client.readPump()
-
 }
