@@ -12,7 +12,7 @@ import (
 )
 
 func home(w http.ResponseWriter, r *http.Request) {
-	homeTemplate.Execute(w, "wss://"+os.Getenv("DOMAIN")+"/play?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxfQ.33jUtng2NN6UqYSch4z0UnkkWSyOziIiKaOWZND9AZ0")
+	homeTemplate.Execute(w, "wss://"+r.URL.Hostname()+"/play?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxfQ.33jUtng2NN6UqYSch4z0UnkkWSyOziIiKaOWZND9AZ0")
 }
 
 func init() {

@@ -30,4 +30,3 @@ services:
       PORT: "5000"
       TOKEN: "dev"
       DB_URI: "postgresql://postgres:dev@localhost:5432/dev?sslmode=disable"
-      DOMAIN: "echotom.dev"
