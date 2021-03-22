@@ -33,7 +33,7 @@
 
     - name: Ensure bash, git, tree, OpenSSl, and libssl are the latest versions
       apt: 
-        name: ['bash', 'git', 'tree', 'nmap', 'netstat', 'lsof', 'openssl', 'libssl-dev', 'libssl-doc', 'libseccomp2']
+        name: ['bash', 'git', 'tree', 'nmap', 'lsof', 'openssl', 'libssl-dev', 'libssl-doc', 'libseccomp2']
         update_cache: yes 
         state: latest
 
