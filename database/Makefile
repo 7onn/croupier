@@ -10,7 +10,7 @@ help:
 
 .PHONY: local-db
 local-db:
-	docker run -i --rm \
+	docker run -i --rm -d \
 	--network host \
 	--name db \
 	-e POSTGRES_PASSWORD=dev \
