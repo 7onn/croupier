@@ -18,7 +18,7 @@ GO=CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go
 GO_BUILD_COMMAND=$(GO) build -a --ldflags '-X main.VERSION=$(TAG) -w -extldflags "-static"' -tags netgo -o $(BIN) ./
 
 TAG=0.1.0
-IMAGE=devbytom/pk-$(BIN)
+IMAGE=devbytom/croupier
 
 .PHONY: dev
 dev:
@@ -57,7 +57,7 @@ docker-build:
 	docker build \
 	-t $(IMAGE):$(TAG) \
 	--build-arg TAG=$(TAG) \
-	.
+	../
 
 .PHONY: docker-run
 docker-run: docker-build
@@ -65,7 +65,7 @@ docker-run: docker-build
 	-e PORT=3000 \
 	-e JWT_TOKEN=dev \
 	-e DB_URI="postgresql://postgres:dev@localhost:5432/dev" \
-	devbytom/pk-$(BIN):$(TAG)
+	devbytom/croupier:$(TAG)
 
 .PHONY: docker-push
 docker-push: docker-build

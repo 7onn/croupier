@@ -4,3 +4,4 @@
 # golang_path: "/home/{{ ansible_ssh_user }}"
 home: /home/{{ ansible_ssh_user }}
 ssh: "/home/tom/.ssh/id_rsa"
+hostname: echotom.dev

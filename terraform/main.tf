@@ -8,7 +8,7 @@ resource "google_dns_managed_zone" "echotom_dev" {
 }
 
 resource "google_dns_record_set" "backend" {
-  name = "${local.instance_name}.${google_dns_managed_zone.echotom_dev.dns_name}"
+  name = google_dns_managed_zone.echotom_dev.dns_name
   type = "A"
   ttl  = 3600
 
@@ -27,7 +27,7 @@ name    = local.instance_name
 
   allow {
     protocol = "tcp"
-    ports    = ["22", "5000", "32000-32080"]
+    ports    = ["22-5000"]
   }
 
 }
@@ -57,6 +57,8 @@ resource "google_compute_instance" "backend" {
     access_config {
     }
   }
+
+  tags = ["http-server", "https-server"]
 
   provisioner "local-exec" {
     command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u devbytom -i '${self.network_interface[0].access_config[0].nat_ip},' --private-key ~/.ssh/id_rsa playbook.yml -e ansible_python_interpreter=/usr/bin/python3"
