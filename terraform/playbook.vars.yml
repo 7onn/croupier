@@ -1,7 +1,0 @@
-# golang_version: 1.15.7
-# golang_os: linux
-# golang_arch: amd64
-# golang_path: "/home/{{ ansible_ssh_user }}"
-home: /home/{{ ansible_ssh_user }}
-ssh: "/home/tom/.ssh/id_rsa"
-hostname: echotom.dev
