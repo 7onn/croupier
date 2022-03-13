@@ -36,10 +36,7 @@ func New(cfg Config) (*Broker, error) {
 	}
 	r.cfg = cfg
 
-	r.Croupier, err = croupier.New(cfg.Croupier)
-	if err != nil {
-		return nil, fmt.Errorf("invalid croupier configuration: %w", err)
-	}
+	r.Croupier = croupier.New()
 
 	// Do other setup work here...
 
