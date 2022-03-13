@@ -401,7 +401,7 @@ func (g *Game) NewRound(client *ws.Client, botMode bool) {
 	if !botMode {
 		client.Send <- []byte("---")
 		client.Send <- []byte(fmt.Sprintf("ROUND %d", len((*g).Rounds)))
-		client.Send <- []byte(fmt.Sprintf("Players: %d", len((*g).Rounds)))
+		client.Send <- []byte(fmt.Sprintf("Players: %d", len((*g).Players)))
 		for _, rp := range (*g).Rounds[len((*g).Rounds)-1].Players {
 			client.Send <- []byte(fmt.Sprintf("%s stack: $%d", rp.Name, rp.InitialStack))
 		}
