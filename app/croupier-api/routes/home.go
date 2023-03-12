@@ -3,6 +3,7 @@ package routes
 import (
 	"html/template"
 	"net/http"
+	"os"
 
 	"github.com/7onn/croupier/app/croupier-api/webserver"
 )
@@ -112,6 +113,10 @@ body {
 </body>
 </html>
 `))
-		homeTemplate.Execute(w, "ws://"+r.Host+"/play")
+		wsEndpoint := "ws://"+r.Host+"/play"
+		if os.Getenv("TLS_ENABLED") == "true" {
+			wsEndpoint = "wss://"+r.Host+"/play"
+		}
+		homeTemplate.Execute(w, wsEndpoint)
 	}
 }
