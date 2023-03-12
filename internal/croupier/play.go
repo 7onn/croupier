@@ -526,7 +526,7 @@ func (r Round) IsBetTurnOver(playerIndex int) bool {
 	return false
 }
 
-var bots = []string{"Fulane", "Ciclane", "Falsiane", "Simulane", "Pamela"}
+var bots = []string{"bot1", "bot2", "bot3", "bot4", "bot5"}
 
 func LaunchGame() Game {
 
@@ -535,7 +535,7 @@ func LaunchGame() Game {
 	p := Person{Stack: 1000}
 
 	if p.Name = os.Getenv("PLAYER_NAME"); p.Name == "" {
-		p.Name = "tom"
+		p.Name = "Highstake"
 	}
 
 	sp = append(sp, p)
