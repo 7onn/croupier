@@ -99,7 +99,7 @@ func Play(client *ws.Client, r *Round, playerIndex int, bigBlind int, totalStack
 	}
 	if !p.IsAllIn && !p.HasFolded {
 		if !p.IsBot {
-			client.Send <- []byte(fmt.Sprintf("%v, What do you want to do? You have $%v and %s %s", p.Name, p.InitialStack-p.RoundBet, p.Cards[0], p.Cards[1]))
+			client.Send <- []byte(fmt.Sprintf("%v, What do you want to do? You have $%v and %s %s", p.Name, p.InitialStack-p.RoundBet, p.Cards[0].ToString(), p.Cards[1].ToString()))
 			if (*r).MaxBet == p.RoundBet {
 				client.Send <- []byte("Check (ch)")
 			} else {
