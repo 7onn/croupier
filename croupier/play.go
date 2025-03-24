@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	ws "github.com/7onn/croupier/pkg/websocket"
+	ws "github.com/7onn/croupier/websocket"
 )
 
 func ExpoFunction(odds float64, index float64) float64 {
@@ -529,13 +529,11 @@ func (r Round) IsBetTurnOver(playerIndex int) bool {
 var bots = []string{"bot1", "bot2", "bot3", "bot4", "bot5"}
 
 func LaunchGame() Game {
-
 	sp := []Person{}
-
 	p := Person{Stack: 1000}
 
 	if p.Name = os.Getenv("PLAYER_NAME"); p.Name == "" {
-		p.Name = "Highstake"
+		p.Name = "vicky"
 	}
 
 	sp = append(sp, p)

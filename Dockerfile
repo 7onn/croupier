@@ -1,7 +1,7 @@
-FROM golang:1.17.7 as builder
+FROM golang:1.23 as builder
 ARG TAG=latest
 ENV GOPATH=/go
-ENV GOCACHE=/go/src/github.com/7onn/croupier/app/croupier-api/build-cache
+ENV GOCACHE=/go/src/github.com/7onn/croupier/build-cache
 
 WORKDIR /go/src/github.com/7onn/croupier
 COPY . .
@@ -14,7 +14,7 @@ RUN go mod download && \
     -a \
     --ldflags '-X main.VERSION=$(TAG) -w -extldflags "-static"' \
     -tags netgo \
-    -o server ./app/croupier-api
+    -o server .
 
 FROM centurylink/ca-certs
 COPY --from=builder /go/src/github.com/7onn/croupier/server /bin/server

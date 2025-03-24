@@ -3,8 +3,8 @@ package routes
 import (
 	"net/http"
 
-	"github.com/7onn/croupier/app/croupier-api/webserver"
-	ws "github.com/7onn/croupier/pkg/websocket"
+	"github.com/7onn/croupier/webserver"
+	ws "github.com/7onn/croupier/websocket"
 	"github.com/gorilla/websocket"
 	"github.com/rs/zerolog/log"
 )

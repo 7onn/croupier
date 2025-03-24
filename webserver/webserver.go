@@ -2,7 +2,6 @@ package webserver
 
 import (
 	"errors"
-	"fmt"
 	"net"
 	"net/http"
 	"os"
@@ -10,7 +9,7 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"github.com/7onn/croupier/internal/croupier"
+	"github.com/7onn/croupier/croupier"
 	"github.com/rs/zerolog/log"
 )
 
@@ -27,20 +26,11 @@ type Broker struct {
 }
 
 // New initializes a new Croupier API.
-func New(cfg Config) (*Broker, error) {
+func New(cfg Config) *Broker {
 	r := &Broker{}
-
-	err := validateConfig(cfg)
-	if err != nil {
-		return nil, fmt.Errorf("invalid configuration: %w", err)
-	}
 	r.cfg = cfg
-
 	r.Croupier = croupier.New()
-
-	// Do other setup work here...
-
-	return r, nil
+	return r
 }
 
 // Start the Croupier service

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	ws "github.com/7onn/croupier/pkg/websocket"
+	ws "github.com/7onn/croupier/websocket"
 )
 
 // Croupier exposes all functionalities of the Croupier service.

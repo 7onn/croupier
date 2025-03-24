@@ -3,7 +3,7 @@ package routes
 import (
 	"net/http"
 
-	"github.com/7onn/croupier/app/croupier-api/webserver"
+	"github.com/7onn/croupier/webserver"
 	"github.com/rs/zerolog/log"
 )
 

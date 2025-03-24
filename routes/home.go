@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/7onn/croupier/app/croupier-api/webserver"
+	"github.com/7onn/croupier/webserver"
 )
 
 func Home(srv webserver.Server) http.HandlerFunc {
@@ -113,9 +113,9 @@ body {
 </body>
 </html>
 `))
-		wsEndpoint := "ws://"+r.Host+"/play"
+		wsEndpoint := "ws://" + r.Host + "/play"
 		if os.Getenv("TLS_ENABLED") == "true" {
-			wsEndpoint = "wss://"+r.Host+"/play"
+			wsEndpoint = "wss://" + r.Host + "/play"
 		}
 		homeTemplate.Execute(w, wsEndpoint)
 	}
