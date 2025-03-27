@@ -1,0 +1,126 @@
+package templates
+
+import "github.com/7onn/croupier/models"
+
+func playerCount(table *models.Table) int {
+	return len(table.Members)
+}
+
+func tableId(table *models.Table) string {
+	return table.ID.String()
+}
+
+func userName(user *models.User) string {
+	if user == nil {
+		return ""
+	}
+	return user.Name
+}
+
+func userInputDisabled(user *models.User) string {
+	if user != nil {
+		return "true"
+	}
+	return "false"
+}
+
+templ Lobby(table *models.Table, user *models.User) {
+	<div>
+		<h1>Lobby</h1>
+		<p>Room: { table.ID.String() }</p>
+		<form id="form-join">
+			<input id="playerName" type="text" name="name" placeholder="Name" value={ userName(user) }/>
+			<button id="joinButton" type="submit">Join</button>
+		</form>
+		<p>Players: {{ playerCount(table) }}</p>
+		<ul id="members">
+			for _, member := range table.Members {
+				<li>{ member.Name }</li>
+			}
+		</ul>
+	</div>
+	<script type="text/javascript">
+		function defaultHandler(message) {
+			console.warn("Unknown message type:", message.type, message);
+		}
+
+		function handleMembersMessage(message) {
+			if (message.data.length > 0) {
+				document.getElementById("members").innerHTML = "";
+				for (var j = 0; j < message.data.length; j++) {
+					var member = message.data[j];
+					var li = document.createElement("li");
+					li.innerText = member.name;
+					document.getElementById("members").appendChild(li);
+				}
+			}
+		}
+
+		function handleJwtMessage(message) {
+			console.log("jwt", message);
+		}
+
+		function sendWebSocketMessage(conn, type, data) {
+			const message = {
+					type,
+					data,
+			};
+			conn.send(JSON.stringify(message));
+		}
+
+		const messageHandlers = {
+			'members': handleMembersMessage,
+			'jwt': handleJwtMessage,
+		};
+
+		window.onload = function () {
+				var conn;
+				var playerName = document.getElementById("playerName");
+				var joinButton = document.getElementById("joinButton");
+
+				conn = new WebSocket("ws://localhost:8080/lobbyws");
+				conn.onclose = function (evt) {
+						console.log("connection closed");
+				};
+				conn.onopen = function (evt) {
+					const msg = {
+						tableId: {{ tableId(table) }},
+					}
+					sendWebSocketMessage(conn, "members", msg);
+				};
+				conn.onmessage = function (evt) {
+					try {
+						const messages = evt.data.split("\n");
+						for (const message of messages) {
+							const msg = JSON.parse(message);
+							console.log("message", msg);
+							const handler = messageHandlers[msg.type] || defaultHandler;
+							if (msg.type === "jwt") {
+								document.cookie = "jwt=" + msg.data;
+							}
+							handler(msg);
+						}
+					} catch (e) {
+						console.error("Error processing message:", e);
+					}
+				};
+
+				document.getElementById("form-join").onsubmit = function () {
+					if (!conn) {
+							return false;
+					}
+					if (!playerName.value) {
+							return false;
+					}
+					const player = {
+						name: playerName.value,
+						tableId: {{ tableId(table) }},
+					}
+					joinButton.disabled = true;
+					playerName.disabled = true;
+					sendWebSocketMessage(conn, "newJoiner", player);
+					return false;
+				};
+		};
+	</script>
+}

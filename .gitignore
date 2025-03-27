@@ -2,3 +2,5 @@ build*/
 vendor/
 tmp/
 *.out
+db/*
+templates/*_templ.go
